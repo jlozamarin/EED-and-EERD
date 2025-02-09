@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital EERD</title>
+    <title>Hospital Enhanced Entity-Relationship Diagram (EERD)</title>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
         mermaid.initialize({
@@ -60,21 +60,55 @@
             Person ||--|{ Patient : "Specialization"
 
             Nurse {
+                int NurseID
+                string Name
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
                 string MedicalSpecialties
                 int SupervisorID
             }
 
             Doctor {
+                int DoctorID
+                string Name
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
                 string MedicalSpecialties
             }
 
             Patient {
+                int PatientID
+                string Name
                 string Gender
                 date DateOfBirth
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
+                int AdmittingDoctorID
+                int DischargingDoctorID
+                int BedID
             }
 
-            Bed ||--|{ ElectricBed : "Specialization"
-            Bed ||--|{ ManualBed : "Specialization"
+            Bed {
+                int BedID
+                string Type
+                bool AvailabilityStatus
+            }
+
+            ElectricBed {
+                int BedID
+                bool Electric
+            }
+
+            ManualBed {
+                int BedID
+                bool Manual
+            }
 
             Nurse ||--o{ Ward : "Assigned To"
             Nurse ||--|| Nurse : "Supervises"
@@ -89,4 +123,5 @@
     </div>
 </body>
 </html>
+
 
