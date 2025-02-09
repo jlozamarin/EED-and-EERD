@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital ERD</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h2>Hospital Entity-Relationship Diagram (ERD)</h2>
+    <div class="mermaid">
+        erDiagram
+            Nurse {
+                int NurseID
+                string Name
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
+                string MedicalSpecialties
+                int SupervisorID
+            }
+            ChargeNurse {
+                int ChargeNurseID
+                int WardAssigned
+            }
+            NursePatientEvent {
+                int EventID
+                int NurseID
+                int PatientID
+                string EventType
+                date Date
+                time Time
+            }
+            Ward {
+                int WardNumber
+                string Name
+                string PhysicalLocation
+                string PhoneNumber
+                int ChargeNurseID
+            }
+            Bed {
+                int BedID
+                int WardOrPatientID
+                string Size
+                string Type
+                bool AvailabilityStatus
+            }
+            Patient {
+                int PatientID
+                string Name
+                string Gender
+                date DateOfBirth
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
+                int AdmittingDoctorID
+                int DischargingDoctorID
+                int BedID
+            }
+            Doctor {
+                int DoctorID
+                string Name
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
+                string MedicalSpecialties
+            }
+            Treatment {
+                int TreatmentID
+                string Name
+                string Description
+                decimal Charge
+                date DateAdministered
+                time TimeAdministered
+                string Result
+                int TreatingDoctorID
+            }
+            Item {
+                int ItemID
+                string Name
+                decimal Charge
+                date DateCharged
+                int Quantity
+            }
+
+            Nurse ||--o{ Ward : "Assigned To"
+            Nurse ||--|| Nurse : "Supervises"
+            Ward ||--o{ Bed : "Contains"
+            Ward ||--|| ChargeNurse : "Managed By"
+            Patient ||--o{ Bed : "Occupies"
+            Patient ||--o{ Treatment : "Receives"
+            Patient ||--o{ Item : "Charged For"
+            Doctor ||--o{ Treatment : "Administers"
+            Nurse ||--o{ NursePatientEvent : "Interacts With"
+            Patient ||--o{ NursePatientEvent : "Has Events"
+    </div>
+</body>
+</html>
