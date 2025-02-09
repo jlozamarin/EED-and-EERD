@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital EERD</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <h2>Hospital Enhanced Entity-Relationship Diagram (EERD)</h2>
+    <div class="mermaid">
+        %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#D3D3D3', 'edgeLength': 100, 'fontSize': 14, 'fontFamily': 'Arial', 'nodeSpacing': 50, 'lineColor': 'black' }}}%%
+        
+        erDiagram
+            Person {
+                PersonID
+                Name
+                Address
+                PhoneNumber
+                AlternatePhone
+                Email
+            }
+            
+            Person ||--|{ Nurse : "Specialization" :||
+            Person ||--|{ Doctor : "Specialization" :||
+            Person ||--|{ Patient : "Specialization" :||
+
+            Nurse {
+                MedicalSpecialties
+                SupervisorID
+            }
+
+            Doctor {
+                MedicalSpecialties
+            }
+
+            Patient {
+                Gender
+                DateOfBirth
+            }
+
+            Bed ||--|{ ElectricBed : "Specialization" :||
+            Bed ||--|{ ManualBed : "Specialization" :||
+
+            Nurse ||--o{ Ward : "Assigned To" :||
+            Nurse ||--|| Nurse : "Supervises" :||
+            Ward ||--o{ Bed : "Contains" :||
+            Ward ||--|| ChargeNurse : "Managed By" :||
+            Patient ||--o{ Bed : "Occupies" :||
+            Patient ||--o{ Treatment : "Receives" :||
+            Patient ||--o{ Item : "Charged For" :||
+            Doctor ||--o{ Treatment : "Administers" :||
+            Nurse ||--o{ NursePatientEvent : "Interacts With" :||
+            Patient ||--o{ NursePatientEvent : "Has Events" :||
+    </div>
+</body>
+</html>
