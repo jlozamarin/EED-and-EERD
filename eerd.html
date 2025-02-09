@@ -6,55 +6,87 @@
     <title>Hospital EERD</title>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+        mermaid.initialize({
+            startOnLoad: true,
+            themeVariables: {
+                // Custom styles for tables and lines
+                primaryColor: '#D3D3D3',  // Light grey color for tables
+                lineColor: '#000000',     // Black color for lines (straighter)
+                textColor: '#000000',     // Black text for readability
+                borderRadius: '0px',      // Remove rounding of table corners
+                fontFamily: 'Arial, sans-serif', // Clean font for clarity
+                fontSize: '16px',         // Adjust font size for better readability
+            }
+        });
     </script>
+    <style>
+        /* Additional custom CSS to refine the diagram appearance */
+        .mermaid {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .mermaid table {
+            background-color: #D3D3D3 !important; /* Apply light grey color to tables */
+            border: 1px solid #000000;  /* Apply border to tables for clarity */
+        }
+
+        .mermaid rect {
+            fill: #D3D3D3 !important; /* Apply grey color to the background of tables */
+            stroke: #000000 !important; /* Apply black lines around the tables */
+        }
+
+        .mermaid line {
+            stroke: #000000 !important; /* Ensure lines are black for clarity */
+        }
+    </style>
 </head>
 <body>
     <h2>Hospital Enhanced Entity-Relationship Diagram (EERD)</h2>
     <div class="mermaid">
-        %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#D3D3D3', 'edgeLength': 100, 'fontSize': 14, 'fontFamily': 'Arial', 'nodeSpacing': 50, 'lineColor': 'black' }}}%%
-        
         erDiagram
             Person {
-                PersonID
-                Name
-                Address
-                PhoneNumber
-                AlternatePhone
-                Email
+                int PersonID
+                string Name
+                string Address
+                string PhoneNumber
+                string AlternatePhone
+                string Email
             }
             
-            Person ||--|{ Nurse : "Specialization" :||
-            Person ||--|{ Doctor : "Specialization" :||
-            Person ||--|{ Patient : "Specialization" :||
+            Person ||--|{ Nurse : "Specialization"
+            Person ||--|{ Doctor : "Specialization"
+            Person ||--|{ Patient : "Specialization"
 
             Nurse {
-                MedicalSpecialties
-                SupervisorID
+                string MedicalSpecialties
+                int SupervisorID
             }
 
             Doctor {
-                MedicalSpecialties
+                string MedicalSpecialties
             }
 
             Patient {
-                Gender
-                DateOfBirth
+                string Gender
+                date DateOfBirth
             }
 
-            Bed ||--|{ ElectricBed : "Specialization" :||
-            Bed ||--|{ ManualBed : "Specialization" :||
+            Bed ||--|{ ElectricBed : "Specialization"
+            Bed ||--|{ ManualBed : "Specialization"
 
-            Nurse ||--o{ Ward : "Assigned To" :||
-            Nurse ||--|| Nurse : "Supervises" :||
-            Ward ||--o{ Bed : "Contains" :||
-            Ward ||--|| ChargeNurse : "Managed By" :||
-            Patient ||--o{ Bed : "Occupies" :||
-            Patient ||--o{ Treatment : "Receives" :||
-            Patient ||--o{ Item : "Charged For" :||
-            Doctor ||--o{ Treatment : "Administers" :||
-            Nurse ||--o{ NursePatientEvent : "Interacts With" :||
-            Patient ||--o{ NursePatientEvent : "Has Events" :||
+            Nurse ||--o{ Ward : "Assigned To"
+            Nurse ||--|| Nurse : "Supervises"
+            Ward ||--o{ Bed : "Contains"
+            Ward ||--|| ChargeNurse : "Managed By"
+            Patient ||--o{ Bed : "Occupies"
+            Patient ||--o{ Treatment : "Receives"
+            Patient ||--o{ Item : "Charged For"
+            Doctor ||--o{ Treatment : "Administers"
+            Nurse ||--o{ NursePatientEvent : "Interacts With"
+            Patient ||--o{ NursePatientEvent : "Has Events"
     </div>
 </body>
 </html>
+
